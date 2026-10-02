@@ -107,4 +107,12 @@ router.post('/refresh', authController.refresh);
  */
 router.post('/generate-api-key', authMiddleware, authController.generateApiKey);
 
+router.post('/', (req, res) => {
+    const { apiKey } = req.body;
+    if (apiKey === process.env.API_KEY) {
+        return res.status(200).json({ success: true });
+    }
+    return res.status(401).json({ success: false });
+});
+
 module.exports = router;
